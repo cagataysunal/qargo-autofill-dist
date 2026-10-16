@@ -8,50 +8,46 @@
 <!-- One self-contained page: no external scripts, styles, fonts or images. make_release.sh fills in the public
      address (the placeholder in BASE below). Link to a language with #tr, #nl or #bg; English is the default. -->
 <style>
-  :root { --blue: #1565c0; --ink: #111; --soft: #eef4fc; --line: #c9d7ea; --stop: #b3261e; --stopbg: #fdecea; }
+  :root { --blue: #1565c0; --ink: #1a1a1a; --muted: #555; --soft: #f3f6fa; --line: #dde3ea; --stop: #b3261e; --stopbg: #fdf1f0; }
   * { box-sizing: border-box; }
-  html { font-size: 22px; }
+  html { font-size: 16px; }
   body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: var(--ink);
-         background: #fff; line-height: 1.5; }
-  main { max-width: 900px; margin: 0 auto; padding: 1.2rem 1.2rem 4rem; }
-  header { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-  header svg { width: 84px; height: 84px; flex: none; }
-  h1 { font-size: 2rem; line-height: 1.2; margin: 0; flex: 1 1 12rem; }
-  h2 { font-size: 1.35rem; margin: 2.2rem 0 .6rem; }
-  h3 { font-size: 1.1rem; margin: 0 0 .4rem; }
+         background: #fff; line-height: 1.55; }
+  main { max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  header { display: flex; align-items: center; gap: .75rem; }
+  header svg { width: 36px; height: 36px; flex: none; }
+  h1 { font-size: 1.5rem; line-height: 1.25; margin: 0; font-weight: 650; }
+  h2 { font-size: 1.1rem; margin: 2rem 0 .5rem; }
+  h3 { font-size: 1rem; margin: 0 0 .3rem; }
   p { margin: .6rem 0; }
   button { font: inherit; cursor: pointer; }
-  .langs { display: flex; gap: .4rem; flex-wrap: wrap; margin: 1rem 0 0; }
-  .langs button, .os button { border: 2px solid var(--line); background: #fff; color: var(--ink); border-radius: 12px;
-         padding: .45rem .9rem; }
+  .langs { display: flex; gap: .35rem; flex-wrap: wrap; margin: 1rem 0 1.25rem; }
+  .langs button, .os button { border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 6px; }
+  .langs button { font-size: .875rem; padding: .25rem .65rem; }
   .langs button[aria-pressed="true"], .os button[aria-pressed="true"] { border-color: var(--blue); background: var(--blue); color: #fff; }
-  .os { display: flex; gap: .8rem; flex-wrap: wrap; }
-  .os button { font-size: 1.25rem; font-weight: 600; padding: .9rem 1.6rem; min-width: 11rem; }
-  ol.steps { list-style: none; counter-reset: step; padding: 0; margin: 1rem 0; }
-  ol.steps > li { counter-increment: step; position: relative; padding: .9rem 0 .9rem 4.2rem; border-top: 2px solid var(--line);
-         font-size: 1.25rem; min-height: 4.4rem; }
-  ol.steps > li::before { content: counter(step); position: absolute; left: 0; top: .8rem; width: 3rem; height: 3rem;
-         border-radius: 50%; background: var(--blue); color: #fff; font-weight: 700; font-size: 1.6rem; display: flex;
+  .os { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .os button { font-weight: 600; padding: .55rem 1.2rem; min-width: 9rem; border-radius: 8px; }
+  ol.steps { list-style: none; counter-reset: step; padding: 0; margin: 1.25rem 0; }
+  ol.steps > li { counter-increment: step; position: relative; padding: .9rem 0 .9rem 2.5rem; border-top: 1px solid var(--line); }
+  ol.steps > li::before { content: counter(step); position: absolute; left: 0; top: .95rem; width: 1.6rem; height: 1.6rem;
+         border-radius: 50%; background: var(--blue); color: #fff; font-weight: 600; font-size: .85rem; display: flex;
          align-items: center; justify-content: center; }
-  kbd { font: inherit; font-weight: 600; border: 2px solid #777; border-bottom-width: 4px; border-radius: 8px;
-        padding: 0 .45rem; background: #f6f6f6; white-space: nowrap; }
-  .copy { display: block; width: 100%; margin: .8rem 0 .5rem; padding: 1.1rem 1rem; font-size: 1.5rem; font-weight: 700;
-          color: #fff; background: var(--blue); border: 0; border-radius: 16px; }
-  .copy:active { transform: translateY(2px); }
+  kbd { font: inherit; font-size: .85em; border: 1px solid #c4c4c4; border-bottom-width: 2px; border-radius: 4px;
+        padding: 0 .35em; background: #f7f7f7; white-space: nowrap; }
+  .copy { display: inline-block; margin: .5rem 0; padding: .45rem 1rem; font-size: .95rem; font-weight: 600;
+          color: #fff; background: var(--blue); border: 0; border-radius: 6px; }
+  .copy:active { transform: translateY(1px); }
   .copy.done { background: #1b7f3b; }
-  .copy.small { font-size: 1.05rem; padding: .6rem 1rem; width: auto; }
-  .linelabel { font-size: .8rem; color: #444; margin: .6rem 0 0; }
-  code.line { display: block; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .72rem; background: var(--soft);
-          border: 2px solid var(--line); border-radius: 10px; padding: .6rem .7rem; overflow-wrap: anywhere; user-select: all; }
-  .note { font-size: 1rem; background: var(--soft); border-radius: 12px; padding: .6rem .9rem; margin: .7rem 0 0; }
-  .stop { font-size: 1.05rem; background: var(--stopbg); border: 3px solid var(--stop); border-radius: 12px; padding: .7rem .9rem;
-          margin: .7rem 0 0; }
-  .box { border: 2px solid var(--line); border-radius: 12px; padding: .8rem 1rem; margin: .8rem 0; font-size: 1rem; }
-  details { margin: 1rem 0; font-size: .95rem; }
-  summary { cursor: pointer; font-weight: 600; padding: .4rem 0; }
-  .warn { background: var(--stopbg); border: 3px solid var(--stop); border-radius: 12px; padding: .7rem .9rem; }
+  code.line { display: block; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .8rem; background: var(--soft);
+          border: 1px solid var(--line); border-radius: 6px; padding: .5rem .65rem; overflow-wrap: anywhere; user-select: all; }
+  .note { font-size: .925rem; color: var(--muted); margin: .5rem 0 0; }
+  .stop { font-size: .925rem; background: var(--stopbg); border-left: 3px solid var(--stop); border-radius: 4px; padding: .5rem .8rem;
+          margin: .6rem 0 0; }
+  .box { border: 1px solid var(--line); border-radius: 8px; padding: .7rem .9rem; margin: .6rem 0; font-size: .95rem; }
+  details { margin: .8rem 0; font-size: .925rem; }
+  summary { cursor: pointer; font-weight: 600; padding: .3rem 0; }
+  .warn { background: var(--stopbg); border-left: 3px solid var(--stop); border-radius: 4px; padding: .5rem .8rem; }
   [hidden] { display: none !important; }
-  @media (max-width: 560px) { html { font-size: 19px; } ol.steps > li { padding-left: 3.6rem; } }
 </style>
 </head>
 <body>
@@ -91,39 +87,27 @@
   <section id="mac" hidden>
     <ol class="steps">
       <!-- copy first: once Terminal is open it covers this page -->
-      <li><span data-t="m3"></span>
+      <li><span data-t="m1"></span><br>
         <button type="button" class="copy" data-copy="mac" data-t="copy"></button>
-        <p class="linelabel" data-t="line_label"></p>
         <code class="line" data-line="mac"></code></li>
-      <li data-t="m1"></li>
-      <li data-t="m2"></li>
-      <li data-t="m4"></li>
-      <li><span data-t="m5"></span>
+      <li><span data-t="m2"></span>
+        <p class="note" data-t="m_warn"></p>
         <p class="note" data-t="m_native"></p>
-        <p class="note" data-t="m_nowarn"></p>
         <p class="stop" data-t="m_stop"></p></li>
-      <li data-t="m6"></li>
-      <li data-t="m7"></li>
-      <li data-t="m8"></li>
+      <li data-t="m3"></li>
     </ol>
     <h2 data-t="problem_title"></h2>
     <div class="box" data-t="m_fail"></div>
   </section>
 
   <section id="win" hidden>
-    <div class="box"><h3 data-t="w_pre_title"></h3><div data-t="w_pre_body"></div></div>
     <ol class="steps">
       <!-- copy first: pressing the button after the Run box is open would put the browser in front of it -->
-      <li><span data-t="w2"></span>
+      <li><span data-t="w1"></span><br>
         <button type="button" class="copy" data-copy="win" data-t="copy"></button>
-        <p class="linelabel" data-t="line_label"></p>
         <code class="line" data-line="win"></code></li>
-      <li data-t="w1"></li>
+      <li data-t="w2"></li>
       <li data-t="w3"></li>
-      <li><span data-t="w4"></span>
-        <p class="note" data-t="w_normal"></p></li>
-      <li data-t="w5"></li>
-      <li data-t="w6"></li>
     </ol>
     <h2 data-t="problem_title"></h2>
     <div class="stop"><h3 data-t="w_sac_title"></h3><div data-t="w_sac_body"></div>
@@ -141,7 +125,7 @@
       <p><span data-t="helper_where"></span> <code id="where"></code></p>
       <p data-t="helper_remove"></p>
       <code class="line" data-line="rm"></code>
-      <button type="button" class="copy small" data-copy="rm" data-t="copy"></button>
+      <button type="button" class="copy" data-copy="rm" data-t="copy"></button>
     </details>
   </section>
 </main>
@@ -153,199 +137,151 @@
 {
  "en": {
   "title": "Install Qargo Autofill",
-  "intro": "It takes about five minutes. The computer must be connected to the internet. The installation asks for no password.",
+  "intro": "Installation takes about five minutes and needs an internet connection. It does not ask for a password.",
   "unstamped": "This copy of the page has no download address yet. Use the link you were sent.",
-  "which": "Which computer do you have?",
+  "which": "Your computer",
   "os_mac": "Mac",
   "os_win": "Windows PC",
-  "other_device": "Open this page on the computer where Qargo Autofill must be installed (a Mac or a Windows PC). Or choose the computer above to read the steps.",
-  "copy": "Copy the line",
+  "other_device": "Open this page on the computer where Qargo Autofill will be installed, or choose a computer above to see the steps.",
+  "copy": "Copy line",
   "copied": "Copied ✓",
   "copy_failed": "Copying did not work. Select the line below with the mouse and copy it.",
-  "line_label": "The line:",
-  "m1": "Hold the <kbd>⌘</kbd> key (command) and press the <kbd>space bar</kbd>. A search box appears.",
-  "m2": "Type the word <b>Terminal</b> and press the <kbd>return ↩</kbd> key. A window with some text opens.",
-  "m3": "Press the blue button below. It copies one line of text.",
-  "m4": "Click once inside the Terminal window. Then hold <kbd>⌘</kbd> and press <kbd>V</kbd>.",
-  "m5": "The Mac shows a warning: <b>“Possible Malware, Paste Blocked”</b>. This is expected: the Mac shows it for any line that was copied from a web page. Click <b>“Paste Anyway”</b>.",
+  "m1": "Copy the install line.",
+  "m2": "Open <b>Terminal</b> (<kbd>⌘</kbd> <kbd>Space</kbd>, type Terminal, <kbd>return</kbd>) and paste the line with <kbd>⌘</kbd> <kbd>V</kbd>.",
+  "m_warn": "macOS may show <b>“Possible Malware, Paste Blocked”</b>. It does this for any line copied from a web page; click <b>Paste Anyway</b>.",
   "m_native": "",
-  "m_nowarn": "No warning? Then go on with the next step.",
-  "m_stop": "<b>Stop</b> if the warning has another title — <b>“Malware Detected, Paste Blocked”</b> or <b>“Malicious Script Blocked”</b> — or if it has no “Paste Anyway” button. Click nothing else and call the person who sent you this page.",
-  "m6": "Press the <kbd>return ↩</kbd> key. Lines of text scroll by. Wait a few minutes. You do not have to type anything. The Mac does not ask for a password.",
-  "m7": "Wait until you read <b>Qargo Autofill is installed.</b> A window then shows the blue Qargo Autofill icon, and the program opens by itself.",
-  "m8": "Finished. From now on, start the program with the blue <b>Qargo Autofill</b> icon on the desktop. You can close the Terminal window. No icon there? Hold <kbd>⌘</kbd>, press the <kbd>space bar</kbd>, type <b>Qargo</b> and press <kbd>return ↩</kbd>.",
-  "m_fail": "If you read <b>Qargo Autofill could NOT be installed</b>: check that the Mac is connected to the internet and do steps 1 to 6 again. If it happens again, call the person who sent you this page.",
-  "w_pre_title": "Good to know: one Windows setting can stop the installation",
-  "w_pre_body": "You do not have to look anything up. In step 4 the installer checks this setting by itself. It is called Smart App Control; on a Windows in another language it has a translated name. If it is switched on, the dark window stops with yellow lines that begin with <b>Windows is blocking Qargo Autofill on this PC</b>. Nothing is installed then: read the red box below.",
-  "w1": "Hold the <kbd>⊞</kbd> key (Windows) and press <kbd>R</kbd>. A small box opens at the bottom left of the screen.",
-  "w2": "Press the blue button below. It copies one line of text.",
-  "w3": "Hold <kbd>Ctrl</kbd> and press <kbd>V</kbd>. The line appears in the small box. If it does not, click once in the white field of the box and try again.",
-  "w4": "Press the <kbd>Enter ↵</kbd> key. A dark window with text opens. Wait a few minutes. You do not have to type anything. Windows does not ask for a password.",
-  "w_normal": "If Windows shows a message about Smart App Control or with the word “blocked”, stop and read the red box below.",
-  "w5": "Wait until you read <b>Qargo Autofill is installed.</b> The program opens by itself. In the dark window, press <kbd>Enter ↵</kbd> once to close it.",
-  "w6": "Finished. From now on, start the program with the blue <b>Qargo Autofill</b> icon on the desktop. No icon there? Press the <kbd>⊞</kbd> key, type <b>Qargo</b> and press <kbd>Enter ↵</kbd>.",
-  "problem_title": "If something else happens",
-  "w_sac_title": "If the dark window says “Windows is blocking Qargo Autofill on this PC”",
-  "w_sac_body": "A Windows protection called <b>Smart App Control</b> is switched on. It stops every program that Microsoft does not know yet; there is no way to allow one single program. Windows may also show the message “Smart App Control has blocked part of this app”. Do not change anything yourself: call the person who sent you this page. Whether the protection is switched off is a decision for the owner of the PC.",
+  "m_stop": "<b>Stop</b> if the warning has another title (<b>“Malware Detected, Paste Blocked”</b> or <b>“Malicious Script Blocked”</b>) or no Paste Anyway button, and contact the person who sent you this page.",
+  "m3": "Press <kbd>return</kbd> and wait for <b>Qargo Autofill is installed.</b> The program then opens and its icon appears on the desktop. You can close Terminal.",
+  "m_fail": "If Terminal shows <b>Qargo Autofill could NOT be installed</b>, check the internet connection and run the line again. If it fails again, contact the person who sent you this page.",
+  "w1": "Copy the install line.",
+  "w2": "Press <kbd>⊞ Win</kbd> <kbd>R</kbd>, paste the line with <kbd>Ctrl</kbd> <kbd>V</kbd> and press <kbd>Enter</kbd>.",
+  "w3": "Wait for <b>Qargo Autofill is installed.</b> The program then opens and its icon appears on the desktop. Press <kbd>Enter</kbd> to close the window.",
+  "problem_title": "If something goes wrong",
+  "w_sac_title": "“Windows is blocking Qargo Autofill on this PC”",
+  "w_sac_body": "Smart App Control, or a rule of the organisation that manages the PC, is blocking the program; the window says which. Do not change any settings yourself. Contact the person who sent you this page; whether the program may run is up to the owner of the PC.",
   "w_sac_owner_title": "For the owner of the PC",
-  "w_sac_owner": "You can leave Smart App Control on; then the program cannot be used on this PC. Or you can switch it off: Start → Windows Security → App &amp; browser control → Smart App Control settings → Off, and then do the steps again. Switching it on again later usually works, but not always: on some PCs Windows has to be reset first. In Evaluation mode Windows may switch it On by itself later; the program then stops starting, and running the line again explains it. (On a Windows in another language these names are translated. Windows Security is the program with the shield icon; it also opens with <kbd>⊞</kbd>+<kbd>R</kbd>, then typing windowsdefender: and pressing <kbd>Enter ↵</kbd>.)",
-  "w_clm_title": "If it says “Qargo Autofill can NOT be installed on this PC”",
-  "w_clm_body": "The PC is managed by an organisation that does not allow new programs. Nothing was changed. Call the person who sent you this page.",
-  "w_fail_title": "If it says “Qargo Autofill could NOT be installed”",
-  "w_fail_body": "Check that the PC is connected to the internet and do steps 1 to 4 again. If it happens again, call the person who sent you this page.",
-  "next_title": "After that",
-  "next_body": "The program opens in a browser window. The first time, Qargo asks you to log in there: use your usual Qargo name and password.",
-  "helper_title": "For the helper: what the line does, and how to remove the program",
-  "helper_does": "The line downloads the program into your own user folder and makes the icon. It does not ask for a password, needs no administrator rights and changes no settings of the computer. The program keeps itself up to date.",
+  "w_sac_owner": "Smart App Control blocks every program Microsoft does not know yet and cannot make an exception for one. To use Qargo Autofill, switch it off: Windows Security → App &amp; browser control → Smart App Control settings → Off, then run the line again. Switching it back on later is not always possible without resetting Windows. In Evaluation mode Windows may switch it on by itself later; the program then stops starting, and running the line again explains why.",
+  "w_clm_title": "“Qargo Autofill can NOT be installed on this PC”",
+  "w_clm_body": "The organisation that manages this PC does not allow new programs. Nothing was changed. Contact the person who sent you this page.",
+  "w_fail_title": "“Qargo Autofill could NOT be installed”",
+  "w_fail_body": "Check the internet connection and run the line again. If it fails again, contact the person who sent you this page.",
+  "next_title": "After installing",
+  "next_body": "The program opens in a browser window. The first time, sign in with your usual Qargo account.",
+  "helper_title": "Technical details and uninstalling",
+  "helper_does": "The line installs the program in your own user folder and adds a desktop icon. It needs no administrator rights and changes no system settings. The program keeps itself up to date.",
   "helper_where": "Folder:",
-  "helper_remove": "To remove the program (documents and login are kept), use this line in the same way:"
+  "helper_remove": "To uninstall (your documents and login are kept), run this line the same way:"
  },
  "tr": {
   "title": "Qargo Autofill kurulumu",
-  "intro": "Yaklaşık beş dakika sürer. Bilgisayar internete bağlı olmalıdır. Kurulum şifre sormaz.",
+  "intro": "Kurulum yaklaşık beş dakika sürer ve internet bağlantısı gerektirir. Şifre sormaz.",
   "unstamped": "Sayfanın bu kopyasında henüz indirme adresi yok. Size gönderilen bağlantıyı kullanın.",
-  "which": "Bilgisayarınız hangisi?",
+  "which": "Bilgisayarınız",
   "os_mac": "Mac",
   "os_win": "Windows bilgisayar",
-  "other_device": "Bu sayfayı Qargo Autofill’in kurulacağı bilgisayarda (Mac veya Windows bilgisayar) açın. Ya da adımları okumak için yukarıdan bilgisayarı seçin.",
+  "other_device": "Bu sayfayı Qargo Autofill’in kurulacağı bilgisayarda açın ya da adımları görmek için yukarıdan bir bilgisayar seçin.",
   "copy": "Satırı kopyala",
   "copied": "Kopyalandı ✓",
   "copy_failed": "Kopyalama olmadı. Aşağıdaki satırı fareyle seçip kopyalayın.",
-  "line_label": "Satır:",
-  "m1": "<kbd>⌘</kbd> (command) tuşunu basılı tutun ve <kbd>boşluk</kbd> tuşuna basın. Bir arama kutusu açılır.",
-  "m2": "<b>Terminal</b> sözcüğünü yazın ve <kbd>return ↩</kbd> tuşuna basın. İçinde biraz yazı olan bir pencere açılır.",
-  "m3": "Aşağıdaki mavi düğmeye basın. Bir satır yazıyı kopyalar.",
-  "m4": "Terminal penceresinin içine bir kez tıklayın. Sonra <kbd>⌘</kbd> tuşunu basılı tutup <kbd>V</kbd> tuşuna basın.",
-  "m5": "Mac bir uyarı gösterir: <b>“Olası Kötü Amaçlı Yazılım; Yapıştırma Engellendi”</b> (Possible Malware, Paste Blocked). Bu beklenen bir şeydir: Mac, bir web sayfasından kopyalanan her satır için bunu gösterir. <b>“Yine de Yapıştır”</b> (Paste Anyway) düğmesine tıklayın.",
+  "m1": "Kurulum satırını kopyalayın.",
+  "m2": "<b>Terminal</b>’i açın (<kbd>⌘</kbd> <kbd>Boşluk</kbd>, Terminal yazın, <kbd>return</kbd>) ve satırı <kbd>⌘</kbd> <kbd>V</kbd> ile yapıştırın.",
+  "m_warn": "macOS <b>“Olası Kötü Amaçlı Yazılım; Yapıştırma Engellendi”</b> (Possible Malware, Paste Blocked) uyarısını gösterebilir. Bunu web sayfasından kopyalanan her satır için gösterir; <b>Yine de Yapıştır</b> (Paste Anyway) düğmesine tıklayın.",
   "m_native": "",
-  "m_nowarn": "Uyarı çıkmadı mı? O zaman bir sonraki adıma geçin.",
-  "m_stop": "Uyarının <b>başlığı bundan farklıysa</b> ya da <b>“Yine de Yapıştır”</b> (Paste Anyway) düğmesi yoksa <b>durun</b>. Başka hiçbir şeye tıklamayın ve bu sayfayı size gönderen kişiyi arayın.",
-  "m6": "<kbd>return ↩</kbd> tuşuna basın. Ekranda yazı satırları akar. Birkaç dakika bekleyin. Bir şey yazmanız gerekmez. Mac şifre sormaz.",
-  "m7": "<b>Qargo Autofill is installed.</b> yazısını görene kadar bekleyin. Sonra bir pencere mavi Qargo Autofill simgesini gösterir ve program kendiliğinden açılır.",
-  "m8": "Bitti. Bundan sonra programı masaüstündeki mavi <b>Qargo Autofill</b> simgesiyle başlatın. Terminal penceresini kapatabilirsiniz. Simge orada yok mu? <kbd>⌘</kbd> tuşunu basılı tutup <kbd>boşluk</kbd> tuşuna basın, <b>Qargo</b> yazın ve <kbd>return ↩</kbd> tuşuna basın.",
-  "m_fail": "<b>Qargo Autofill could NOT be installed</b> yazısını görürseniz: Mac’in internete bağlı olduğunu kontrol edin ve 1. adımdan 6. adıma kadar olanları yeniden yapın. Yine olursa bu sayfayı size gönderen kişiyi arayın.",
-  "w_pre_title": "Bilmeniz iyi olur: bir Windows ayarı kurulumu durdurabilir",
-  "w_pre_body": "Hiçbir şeye bakmanız gerekmez. 4. adımda kurulum bu ayarı kendisi denetler. Ayarın adı Akıllı Uygulama Denetimi’dir (Smart App Control). Ayar açıksa koyu pencere, <b>Windows is blocking Qargo Autofill on this PC</b> ile başlayan sarı satırlarla durur. O zaman hiçbir şey kurulmaz: aşağıdaki kırmızı kutuyu okuyun.",
-  "w1": "<kbd>⊞</kbd> (Windows) tuşunu basılı tutun ve <kbd>R</kbd> tuşuna basın. Ekranın sol altında küçük bir kutu açılır.",
-  "w2": "Aşağıdaki mavi düğmeye basın. Bir satır yazıyı kopyalar.",
-  "w3": "<kbd>Ctrl</kbd> tuşunu basılı tutup <kbd>V</kbd> tuşuna basın. Satır küçük kutuda görünür. Görünmezse kutudaki beyaz alana bir kez tıklayıp yeniden deneyin.",
-  "w4": "<kbd>Enter ↵</kbd> tuşuna basın. İçinde yazı olan koyu renkli bir pencere açılır. Birkaç dakika bekleyin. Bir şey yazmanız gerekmez. Windows şifre sormaz.",
-  "w_normal": "Windows, Akıllı Uygulama Denetimi (Smart App Control) hakkında veya içinde “blocked” sözcüğü geçen bir ileti gösterirse durun ve aşağıdaki kırmızı kutuyu okuyun.",
-  "w5": "<b>Qargo Autofill is installed.</b> yazısını görene kadar bekleyin. Program kendiliğinden açılır. Koyu renkli pencereyi kapatmak için içinde bir kez <kbd>Enter ↵</kbd> tuşuna basın.",
-  "w6": "Bitti. Bundan sonra programı masaüstündeki mavi <b>Qargo Autofill</b> simgesiyle başlatın. Simge orada yok mu? <kbd>⊞</kbd> tuşuna basın, <b>Qargo</b> yazın ve <kbd>Enter ↵</kbd> tuşuna basın.",
-  "problem_title": "Başka bir şey olursa",
-  "w_sac_title": "Koyu renkli pencerede “Windows is blocking Qargo Autofill on this PC” yazıyorsa",
-  "w_sac_body": "Windows’un <b>Akıllı Uygulama Denetimi</b> (Smart App Control) adlı koruması açıktır. Bu koruma, Microsoft’un henüz tanımadığı her programı durdurur; tek bir programa izin vermenin yolu yoktur. Windows ayrıca “Smart App Control has blocked part of this app” iletisini gösterebilir. Kendiniz hiçbir şeyi değiştirmeyin: bu sayfayı size gönderen kişiyi arayın. Korumanın kapatılıp kapatılmayacağına bilgisayarın sahibi karar verir.",
+  "m_stop": "Uyarının <b>başlığı farklıysa</b> ya da <b>Yine de Yapıştır</b> (Paste Anyway) düğmesi yoksa <b>durun</b> ve bu sayfayı size gönderen kişiye haber verin.",
+  "m3": "<kbd>return</kbd> tuşuna basın. Terminal’de <b>Qargo Autofill is installed.</b> yazınca program açılır ve simgesi masaüstüne gelir. Ardından Terminal’i kapatabilirsiniz.",
+  "m_fail": "Terminal’de <b>Qargo Autofill could NOT be installed</b> yazarsa internet bağlantısını kontrol edip satırı yeniden çalıştırın. Yine olmazsa bu sayfayı size gönderen kişiye haber verin.",
+  "w1": "Kurulum satırını kopyalayın.",
+  "w2": "<kbd>⊞ Win</kbd> <kbd>R</kbd> tuşlarına basın, satırı <kbd>Ctrl</kbd> <kbd>V</kbd> ile yapıştırın ve <kbd>Enter</kbd> tuşuna basın.",
+  "w3": "Pencerede <b>Qargo Autofill is installed.</b> yazınca program açılır ve simgesi masaüstüne gelir. Pencereyi kapatmak için <kbd>Enter</kbd> tuşuna basın.",
+  "problem_title": "Bir sorun çıkarsa",
+  "w_sac_title": "“Windows is blocking Qargo Autofill on this PC”",
+  "w_sac_body": "Programı Akıllı Uygulama Denetimi (Smart App Control) ya da bilgisayarı yöneten kuruluşun bir kuralı engelliyor; hangisi olduğunu pencere yazar. Ayarları kendiniz değiştirmeyin. Bu sayfayı size gönderen kişiye haber verin; programın çalışmasına izin verilip verilmeyeceğine bilgisayarın sahibi karar verir.",
   "w_sac_owner_title": "Bilgisayarın sahibi için",
-  "w_sac_owner": "Akıllı Uygulama Denetimi’ni (Smart App Control) açık bırakabilirsiniz; o zaman program bu bilgisayarda kullanılamaz. Ya da kapatabilirsiniz: Başlat (Start) → Windows Güvenliği (Windows Security) → Uygulama ve tarayıcı denetimi (App &amp; browser control) → Akıllı Uygulama Denetimi ayarları (Smart App Control settings) → Kapalı (Off); sonra adımları yeniden yapın. Daha sonra yeniden açmak çoğu zaman mümkündür, ama her zaman değil: bazı bilgisayarlarda önce Windows’un sıfırlanması gerekir. Değerlendirme (Evaluation) modunda Windows bunu daha sonra kendiliğinden Açık (On) yapabilir; o zaman program başlamaz ve satırı yeniden çalıştırmak nedenini açıklar. (Windows Güvenliği (Windows Security), kalkan simgeli programdır; <kbd>⊞</kbd>+<kbd>R</kbd> tuşlarına basıp windowsdefender: yazarak ve <kbd>Enter ↵</kbd> tuşuna basarak da açılır.)",
-  "w_clm_title": "“Qargo Autofill can NOT be installed on this PC” yazıyorsa",
-  "w_clm_body": "Bilgisayar, yeni program kurulmasına izin vermeyen bir kuruluş tarafından yönetiliyor. Hiçbir şey değiştirilmedi. Bu sayfayı size gönderen kişiyi arayın.",
-  "w_fail_title": "“Qargo Autofill could NOT be installed” yazıyorsa",
-  "w_fail_body": "Bilgisayarın internete bağlı olduğunu kontrol edin ve 1. adımdan 4. adıma kadar olanları yeniden yapın. Yine olursa bu sayfayı size gönderen kişiyi arayın.",
-  "next_title": "Sonrası",
-  "next_body": "Program bir tarayıcı penceresinde açılır. İlk seferde Qargo orada oturum açmanızı ister: her zamanki Qargo adınızı ve şifrenizi kullanın.",
-  "helper_title": "Yardım eden kişi için: bu satır ne yapar, program nasıl kaldırılır",
-  "helper_does": "Satır, programı kendi kullanıcı klasörünüze indirir ve simgeyi oluşturur. Şifre sormaz, yönetici hakkı gerektirmez ve bilgisayarın hiçbir ayarını değiştirmez. Program kendini güncel tutar.",
+  "w_sac_owner": "Akıllı Uygulama Denetimi, Microsoft’un henüz tanımadığı her programı engeller ve tek bir program için istisna yapamaz. Qargo Autofill’i kullanmak için kapatın: Windows Güvenliği (Windows Security) → Uygulama ve tarayıcı denetimi (App &amp; browser control) → Akıllı Uygulama Denetimi ayarları (Smart App Control settings) → Kapalı (Off); sonra satırı yeniden çalıştırın. Daha sonra yeniden açmak, Windows sıfırlanmadan her zaman mümkün olmaz. Değerlendirme (Evaluation) modunda Windows onu ileride kendiliğinden açabilir; program o zaman başlamaz ve satırı yeniden çalıştırmak nedenini açıklar.",
+  "w_clm_title": "“Qargo Autofill can NOT be installed on this PC”",
+  "w_clm_body": "Bu bilgisayarı yöneten kuruluş yeni programlara izin vermiyor. Hiçbir şey değiştirilmedi. Bu sayfayı size gönderen kişiye haber verin.",
+  "w_fail_title": "“Qargo Autofill could NOT be installed”",
+  "w_fail_body": "İnternet bağlantısını kontrol edip satırı yeniden çalıştırın. Yine olmazsa bu sayfayı size gönderen kişiye haber verin.",
+  "next_title": "Kurulumdan sonra",
+  "next_body": "Program bir tarayıcı penceresinde açılır. İlk seferde her zamanki Qargo hesabınızla oturum açın.",
+  "helper_title": "Teknik bilgiler ve kaldırma",
+  "helper_does": "Satır, programı kendi kullanıcı klasörünüze kurar ve masaüstüne bir simge ekler. Yönetici hakkı gerektirmez ve sistem ayarlarını değiştirmez. Program kendini güncel tutar.",
   "helper_where": "Klasör:",
-  "helper_remove": "Programı kaldırmak için (belgeler ve oturum korunur) şu satırı aynı şekilde kullanın:"
+  "helper_remove": "Kaldırmak için (belgeleriniz ve oturumunuz korunur) şu satırı aynı şekilde çalıştırın:"
  },
  "nl": {
   "title": "Qargo Autofill installeren",
-  "intro": "Het duurt ongeveer vijf minuten. De computer moet verbonden zijn met internet. De installatie vraagt niet om een wachtwoord.",
+  "intro": "De installatie duurt ongeveer vijf minuten en heeft een internetverbinding nodig. Er wordt geen wachtwoord gevraagd.",
   "unstamped": "Deze kopie van de pagina heeft nog geen downloadadres. Gebruik de link die u is gestuurd.",
-  "which": "Welke computer hebt u?",
+  "which": "Uw computer",
   "os_mac": "Mac",
   "os_win": "Windows-pc",
-  "other_device": "Open deze pagina op de computer waarop Qargo Autofill moet komen (een Mac of een Windows-pc). Of kies hierboven de computer om de stappen te lezen.",
+  "other_device": "Open deze pagina op de computer waarop Qargo Autofill moet komen, of kies hierboven een computer om de stappen te zien.",
   "copy": "Kopieer de regel",
   "copied": "Gekopieerd ✓",
   "copy_failed": "Kopiëren is niet gelukt. Selecteer de regel hieronder met de muis en kopieer hem.",
-  "line_label": "De regel:",
-  "m1": "Houd de toets <kbd>⌘</kbd> (command) ingedrukt en druk op de <kbd>spatiebalk</kbd>. Er verschijnt een zoekvak.",
-  "m2": "Typ het woord <b>Terminal</b> en druk op de toets <kbd>return ↩</kbd>. Er opent een venster met wat tekst.",
-  "m3": "Druk op de blauwe knop hieronder. Die kopieert één regel tekst.",
-  "m4": "Klik één keer in het Terminal-venster. Houd dan <kbd>⌘</kbd> ingedrukt en druk op <kbd>V</kbd>.",
-  "m5": "De Mac toont een waarschuwing: <b>“Mogelijke malware, plakken geblokkeerd”</b> (Possible Malware, Paste Blocked). Dat is te verwachten: de Mac toont dit bij elke regel die van een webpagina is gekopieerd. Klik op <b>“Plak toch”</b> (Paste Anyway).",
+  "m1": "Kopieer de installatieregel.",
+  "m2": "Open <b>Terminal</b> (<kbd>⌘</kbd> <kbd>Spatie</kbd>, typ Terminal, <kbd>return</kbd>) en plak de regel met <kbd>⌘</kbd> <kbd>V</kbd>.",
+  "m_warn": "macOS kan <b>“Mogelijke malware, plakken geblokkeerd”</b> (Possible Malware, Paste Blocked) tonen. Dat gebeurt bij elke regel die van een webpagina komt; klik op <b>Plak toch</b> (Paste Anyway).",
   "m_native": "",
-  "m_nowarn": "Geen waarschuwing? Ga dan verder met de volgende stap.",
-  "m_stop": "<b>Stop</b> als de waarschuwing <b>een andere titel</b> heeft of als de knop <b>“Plak toch”</b> (Paste Anyway) ontbreekt. Klik nergens anders op en bel degene die u deze pagina heeft gestuurd.",
-  "m6": "Druk op de toets <kbd>return ↩</kbd>. Er lopen regels tekst over het scherm. Wacht een paar minuten. U hoeft niets te typen. De Mac vraagt niet om een wachtwoord.",
-  "m7": "Wacht tot u leest: <b>Qargo Autofill is installed.</b> Daarna toont een venster het blauwe pictogram van Qargo Autofill en opent het programma vanzelf.",
-  "m8": "Klaar. Start het programma voortaan met het blauwe pictogram <b>Qargo Autofill</b> op het bureaublad. U kunt het Terminal-venster sluiten. Staat het pictogram daar niet? Houd <kbd>⌘</kbd> ingedrukt, druk op de <kbd>spatiebalk</kbd>, typ <b>Qargo</b> en druk op <kbd>return ↩</kbd>.",
-  "m_fail": "Leest u <b>Qargo Autofill could NOT be installed</b>? Controleer of de Mac verbonden is met internet en doe stap 1 tot en met 6 opnieuw. Gebeurt het weer, bel dan degene die u deze pagina heeft gestuurd.",
-  "w_pre_title": "Goed om te weten: één Windows-instelling kan de installatie tegenhouden",
-  "w_pre_body": "U hoeft niets op te zoeken. In stap 4 controleert het installatieprogramma deze instelling zelf. Ze heet Smart App Control. Staat ze aan, dan stopt het donkere venster met gele regels die beginnen met <b>Windows is blocking Qargo Autofill on this PC</b>. Er wordt dan niets geïnstalleerd: lees het rode vak hieronder.",
-  "w1": "Houd de toets <kbd>⊞</kbd> (Windows) ingedrukt en druk op <kbd>R</kbd>. Linksonder op het scherm opent een klein venster.",
-  "w2": "Druk op de blauwe knop hieronder. Die kopieert één regel tekst.",
-  "w3": "Houd <kbd>Ctrl</kbd> ingedrukt en druk op <kbd>V</kbd>. De regel verschijnt in het kleine venster. Gebeurt dat niet, klik dan één keer in het witte veld van het venster en probeer het opnieuw.",
-  "w4": "Druk op de toets <kbd>Enter ↵</kbd>. Er opent een donker venster met tekst. Wacht een paar minuten. U hoeft niets te typen. Windows vraagt niet om een wachtwoord.",
-  "w_normal": "Toont Windows een melding over Smart App Control of met het woord “blocked”, stop dan en lees het rode vak hieronder.",
-  "w5": "Wacht tot u leest: <b>Qargo Autofill is installed.</b> Het programma opent vanzelf. Druk in het donkere venster één keer op <kbd>Enter ↵</kbd> om het te sluiten.",
-  "w6": "Klaar. Start het programma voortaan met het blauwe pictogram <b>Qargo Autofill</b> op het bureaublad. Staat het pictogram daar niet? Druk op de toets <kbd>⊞</kbd>, typ <b>Qargo</b> en druk op <kbd>Enter ↵</kbd>.",
-  "problem_title": "Als er iets anders gebeurt",
-  "w_sac_title": "Als in het donkere venster staat: “Windows is blocking Qargo Autofill on this PC”",
-  "w_sac_body": "Dan staat de Windows-beveiliging <b>Smart App Control</b> aan. Die houdt elk programma tegen dat Microsoft nog niet kent; één enkel programma toestaan kan niet. Windows kan ook de melding “Smart App Control has blocked part of this app” tonen. Verander zelf niets: bel degene die u deze pagina heeft gestuurd. Of de beveiliging wordt uitgezet, beslist de eigenaar van de pc.",
+  "m_stop": "<b>Stop</b> als de waarschuwing <b>een andere titel</b> heeft of de knop <b>Plak toch</b> (Paste Anyway) ontbreekt, en neem contact op met degene die u deze pagina heeft gestuurd.",
+  "m3": "Druk op <kbd>return</kbd>. Zodra Terminal <b>Qargo Autofill is installed.</b> toont, opent het programma en staat het pictogram op het bureaublad. Daarna kunt u Terminal sluiten.",
+  "m_fail": "Toont Terminal <b>Qargo Autofill could NOT be installed</b>? Controleer de internetverbinding en voer de regel opnieuw uit. Lukt het weer niet, neem dan contact op met degene die u deze pagina heeft gestuurd.",
+  "w1": "Kopieer de installatieregel.",
+  "w2": "Druk op <kbd>⊞ Win</kbd> <kbd>R</kbd>, plak de regel met <kbd>Ctrl</kbd> <kbd>V</kbd> en druk op <kbd>Enter</kbd>.",
+  "w3": "Zodra het venster <b>Qargo Autofill is installed.</b> toont, opent het programma en staat het pictogram op het bureaublad. Druk op <kbd>Enter</kbd> om het venster te sluiten.",
+  "problem_title": "Als er iets misgaat",
+  "w_sac_title": "“Windows is blocking Qargo Autofill on this PC”",
+  "w_sac_body": "Smart App Control, of een regel van de organisatie die de pc beheert, houdt het programma tegen; het venster zegt welke van de twee. Verander zelf geen instellingen. Neem contact op met degene die u deze pagina heeft gestuurd; of het programma mag draaien, beslist de eigenaar van de pc.",
   "w_sac_owner_title": "Voor de eigenaar van de pc",
-  "w_sac_owner": "U kunt Smart App Control aan laten; dan kan het programma op deze pc niet worden gebruikt. Of u zet het uit: Start → Windows-beveiliging (Windows Security) → App- en browserbeheer (App &amp; browser control) → Instellingen voor Smart App Control (Smart App Control settings) → Uit (Off), en doet daarna de stappen opnieuw. Later weer aanzetten lukt meestal, maar niet altijd: op sommige pc’s moet Windows daarvoor eerst opnieuw worden ingesteld. In de stand Evaluatie (Evaluation) kan Windows het later zelf op Aan (On) zetten; het programma start dan niet meer, en de regel opnieuw uitvoeren legt het uit. (Windows-beveiliging (Windows Security) is het programma met het schildpictogram; het opent ook met <kbd>⊞</kbd>+<kbd>R</kbd>, daarna windowsdefender: typen en op <kbd>Enter ↵</kbd> drukken.)",
-  "w_clm_title": "Als er staat: “Qargo Autofill can NOT be installed on this PC”",
-  "w_clm_body": "De pc wordt beheerd door een organisatie die geen nieuwe programma’s toestaat. Er is niets veranderd. Bel degene die u deze pagina heeft gestuurd.",
-  "w_fail_title": "Als er staat: “Qargo Autofill could NOT be installed”",
-  "w_fail_body": "Controleer of de pc verbonden is met internet en doe stap 1 tot en met 4 opnieuw. Gebeurt het weer, bel dan degene die u deze pagina heeft gestuurd.",
-  "next_title": "Daarna",
-  "next_body": "Het programma opent in een browservenster. De eerste keer vraagt Qargo u daar om in te loggen: gebruik uw gewone naam en wachtwoord van Qargo.",
-  "helper_title": "Voor de helper: wat de regel doet en hoe u het programma verwijdert",
-  "helper_does": "De regel downloadt het programma naar uw eigen gebruikersmap en maakt het pictogram. Er wordt geen wachtwoord gevraagd, er zijn geen beheerdersrechten nodig en er worden geen instellingen van de computer gewijzigd. Het programma werkt zichzelf bij.",
+  "w_sac_owner": "Smart App Control houdt elk programma tegen dat Microsoft nog niet kent, en een uitzondering voor één programma is niet mogelijk. Om Qargo Autofill te gebruiken zet u het uit: Windows-beveiliging (Windows Security) → App- en browserbeheer (App &amp; browser control) → Instellingen voor Smart App Control → Uit (Off), en voert u de regel opnieuw uit. Later weer aanzetten lukt niet altijd zonder Windows opnieuw in te stellen. In de stand Evaluatie (Evaluation) kan Windows het later zelf aanzetten; het programma start dan niet meer, en de regel opnieuw uitvoeren legt uit waarom.",
+  "w_clm_title": "“Qargo Autofill can NOT be installed on this PC”",
+  "w_clm_body": "De organisatie die deze pc beheert, staat geen nieuwe programma’s toe. Er is niets veranderd. Neem contact op met degene die u deze pagina heeft gestuurd.",
+  "w_fail_title": "“Qargo Autofill could NOT be installed”",
+  "w_fail_body": "Controleer de internetverbinding en voer de regel opnieuw uit. Lukt het weer niet, neem dan contact op met degene die u deze pagina heeft gestuurd.",
+  "next_title": "Na de installatie",
+  "next_body": "Het programma opent in een browservenster. Log de eerste keer in met uw gewone Qargo-account.",
+  "helper_title": "Technische details en verwijderen",
+  "helper_does": "De regel installeert het programma in uw eigen gebruikersmap en zet een pictogram op het bureaublad. Er zijn geen beheerdersrechten nodig en er worden geen systeeminstellingen gewijzigd. Het programma werkt zichzelf bij.",
   "helper_where": "Map:",
-  "helper_remove": "Om het programma te verwijderen (documenten en login blijven bewaard) gebruikt u deze regel op dezelfde manier:"
+  "helper_remove": "Om het programma te verwijderen (documenten en login blijven bewaard) voert u deze regel op dezelfde manier uit:"
  },
  "bg": {
   "title": "Инсталиране на Qargo Autofill",
-  "intro": "Отнема около пет минути. Компютърът трябва да е свързан с интернет. Инсталирането не иска парола.",
+  "intro": "Инсталирането отнема около пет минути и изисква връзка с интернет. Не се иска парола.",
   "unstamped": "Това копие на страницата още няма адрес за изтегляне. Използвайте връзката, която ви е изпратена.",
-  "which": "Какъв е вашият компютър?",
+  "which": "Вашият компютър",
   "os_mac": "Mac",
   "os_win": "Компютър с Windows",
-  "other_device": "Отворете тази страница на компютъра, на който трябва да се инсталира Qargo Autofill (Mac или компютър с Windows). Или изберете компютъра по-горе, за да прочетете стъпките.",
+  "other_device": "Отворете тази страница на компютъра, на който ще се инсталира Qargo Autofill, или изберете компютър по-горе, за да видите стъпките.",
   "copy": "Копирай реда",
   "copied": "Копирано ✓",
   "copy_failed": "Копирането не успя. Маркирайте реда по-долу с мишката и го копирайте.",
-  "line_label": "Редът:",
-  "m1": "Задръжте клавиша <kbd>⌘</kbd> (command) и натиснете <kbd>интервал</kbd>. Появява се поле за търсене.",
-  "m2": "Напишете думата <b>Terminal</b> и натиснете клавиша <kbd>return ↩</kbd>. Отваря се прозорец с малко текст.",
-  "m3": "Натиснете синия бутон по-долу. Той копира един ред текст.",
-  "m4": "Щракнете веднъж в прозореца на Terminal. След това задръжте <kbd>⌘</kbd> и натиснете <kbd>V</kbd>.",
-  "m5": "Mac показва предупреждение: <b>“Possible Malware, Paste Blocked”</b>. Това е очаквано: Mac го показва за всеки ред, копиран от уеб страница. Щракнете върху <b>“Paste Anyway”</b>.",
-  "m_native": "Предупреждението се показва на езика на вашия Mac; тук имената са дадени на английски.",
-  "m_nowarn": "Няма предупреждение? Тогава продължете със следващата стъпка.",
-  "m_stop": "<b>Спрете</b>, ако предупреждението е с друго заглавие — <b>“Malware Detected, Paste Blocked”</b> или <b>“Malicious Script Blocked”</b> — или ако няма бутон “Paste Anyway”. Не щраквайте върху нищо друго и се обадете на човека, който ви е изпратил тази страница.",
-  "m6": "Натиснете клавиша <kbd>return ↩</kbd>. По екрана преминават редове с текст. Изчакайте няколко минути. Не е нужно да пишете нищо. Mac не иска парола.",
-  "m7": "Изчакайте, докато прочетете <b>Qargo Autofill is installed.</b> След това прозорец показва синята икона на Qargo Autofill и програмата се отваря сама.",
-  "m8": "Готово. Отсега нататък стартирайте програмата със синята икона <b>Qargo Autofill</b> на работния плот. Можете да затворите прозореца на Terminal. Няма икона там? Задръжте <kbd>⌘</kbd>, натиснете <kbd>интервал</kbd>, напишете <b>Qargo</b> и натиснете <kbd>return ↩</kbd>.",
-  "m_fail": "Ако прочетете <b>Qargo Autofill could NOT be installed</b>: проверете дали Mac е свързан с интернет и повторете стъпките от 1 до 6. Ако се случи отново, обадете се на човека, който ви е изпратил тази страница.",
-  "w_pre_title": "Добре е да знаете: една настройка на Windows може да спре инсталирането",
-  "w_pre_body": "Не е нужно да търсите нищо. В стъпка 4 инсталаторът сам проверява тази настройка. Тя се казва „Интелигентно управление на приложенията“ (Smart App Control). Ако е включена, тъмният прозорец спира с жълти редове, които започват с <b>Windows is blocking Qargo Autofill on this PC</b>. Тогава нищо не се инсталира: прочетете червеното поле по-долу.",
-  "w1": "Задръжте клавиша <kbd>⊞</kbd> (Windows) и натиснете <kbd>R</kbd>. В долния ляв ъгъл на екрана се отваря малко прозорче.",
-  "w2": "Натиснете синия бутон по-долу. Той копира един ред текст.",
-  "w3": "Задръжте <kbd>Ctrl</kbd> и натиснете <kbd>V</kbd>. Редът се появява в малкото прозорче. Ако не се появи, щракнете веднъж в бялото поле на прозорчето и опитайте отново.",
-  "w4": "Натиснете клавиша <kbd>Enter ↵</kbd>. Отваря се тъмен прозорец с текст. Изчакайте няколко минути. Не е нужно да пишете нищо. Windows не иска парола.",
-  "w_normal": "Ако Windows покаже съобщение за „Интелигентно управление на приложенията“ (Smart App Control) или с думата “blocked”, спрете и прочетете червеното поле по-долу.",
-  "w5": "Изчакайте, докато прочетете <b>Qargo Autofill is installed.</b> Програмата се отваря сама. В тъмния прозорец натиснете веднъж <kbd>Enter ↵</kbd>, за да го затворите.",
-  "w6": "Готово. Отсега нататък стартирайте програмата със синята икона <b>Qargo Autofill</b> на работния плот. Няма икона там? Натиснете клавиша <kbd>⊞</kbd>, напишете <b>Qargo</b> и натиснете <kbd>Enter ↵</kbd>.",
-  "problem_title": "Ако се случи нещо друго",
-  "w_sac_title": "Ако в тъмния прозорец пише “Windows is blocking Qargo Autofill on this PC”",
-  "w_sac_body": "Включена е защитата на Windows <b>„Интелигентно управление на приложенията“</b> (Smart App Control). Тя спира всяка програма, която Microsoft още не познава; няма начин да се разреши само една програма. Windows може да покаже и съобщението “Smart App Control has blocked part of this app”. Не променяйте нищо сами: обадете се на човека, който ви е изпратил тази страница. Дали защитата да се изключи, решава собственикът на компютъра.",
+  "m1": "Копирайте реда за инсталиране.",
+  "m2": "Отворете <b>Terminal</b> (<kbd>⌘</kbd> <kbd>интервал</kbd>, напишете Terminal, <kbd>return</kbd>) и поставете реда с <kbd>⌘</kbd> <kbd>V</kbd>.",
+  "m_warn": "macOS може да покаже <b>“Possible Malware, Paste Blocked”</b>. Това се случва за всеки ред, копиран от уеб страница; щракнете върху <b>Paste Anyway</b>.",
+  "m_native": "Предупреждението е на езика на вашия Mac; тук имената са дадени на английски.",
+  "m_stop": "<b>Спрете</b>, ако предупреждението е с друго заглавие (<b>“Malware Detected, Paste Blocked”</b> или <b>“Malicious Script Blocked”</b>) или няма бутон Paste Anyway, и се свържете с човека, който ви е изпратил тази страница.",
+  "m3": "Натиснете <kbd>return</kbd> и изчакайте <b>Qargo Autofill is installed.</b> След това програмата се отваря и иконата ѝ се появява на работния плот. Можете да затворите Terminal.",
+  "m_fail": "Ако Terminal покаже <b>Qargo Autofill could NOT be installed</b>, проверете връзката с интернет и изпълнете реда отново. Ако пак не стане, свържете се с човека, който ви е изпратил тази страница.",
+  "w1": "Копирайте реда за инсталиране.",
+  "w2": "Натиснете <kbd>⊞ Win</kbd> <kbd>R</kbd>, поставете реда с <kbd>Ctrl</kbd> <kbd>V</kbd> и натиснете <kbd>Enter</kbd>.",
+  "w3": "Изчакайте <b>Qargo Autofill is installed.</b> След това програмата се отваря и иконата ѝ се появява на работния плот. Натиснете <kbd>Enter</kbd>, за да затворите прозореца.",
+  "problem_title": "Ако нещо се обърка",
+  "w_sac_title": "“Windows is blocking Qargo Autofill on this PC”",
+  "w_sac_body": "Програмата е спряна от „Интелигентно управление на приложенията“ (Smart App Control) или от правило на организацията, която управлява компютъра; прозорецът казва кое от двете. Не променяйте настройки сами. Свържете се с човека, който ви е изпратил тази страница; дали програмата да бъде разрешена, решава собственикът на компютъра.",
   "w_sac_owner_title": "За собственика на компютъра",
-  "w_sac_owner": "Можете да оставите „Интелигентно управление на приложенията“ (Smart App Control) включено; тогава програмата не може да се използва на този компютър. Или можете да го изключите: Старт (Start) → Защита в Windows (Windows Security) → Управление на приложения и браузър (App &amp; browser control) → настройки на „Интелигентно управление на приложенията“ (Smart App Control settings) → Изкл. (Off), и след това да повторите стъпките. По-късно обикновено може да се включи отново, но не винаги: на някои компютри първо трябва Windows да се нулира. В режим „Оценка“ (Evaluation) Windows може по-късно сам да го включи – „Вкл.“ (On); тогава програмата спира да се стартира, а повторното изпълнение на реда го обяснява. („Защита в Windows“ (Windows Security) е програмата с икона на щит; отваря се и с <kbd>⊞</kbd>+<kbd>R</kbd>, след това се пише windowsdefender: и се натиска <kbd>Enter ↵</kbd>.)",
-  "w_clm_title": "Ако пише “Qargo Autofill can NOT be installed on this PC”",
-  "w_clm_body": "Компютърът се управлява от организация, която не разрешава нови програми. Нищо не е променено. Обадете се на човека, който ви е изпратил тази страница.",
-  "w_fail_title": "Ако пише “Qargo Autofill could NOT be installed”",
-  "w_fail_body": "Проверете дали компютърът е свързан с интернет и повторете стъпките от 1 до 4. Ако се случи отново, обадете се на човека, който ви е изпратил тази страница.",
-  "next_title": "След това",
-  "next_body": "Програмата се отваря в прозорец на браузър. Първия път Qargo ви моли да влезете там: използвайте обичайните си име и парола за Qargo.",
-  "helper_title": "За помощника: какво прави редът и как се премахва програмата",
-  "helper_does": "Редът изтегля програмата във вашата потребителска папка и създава иконата. Не иска парола, не изисква администраторски права и не променя настройки на компютъра. Програмата се обновява сама.",
+  "w_sac_owner": "„Интелигентно управление на приложенията“ спира всяка програма, която Microsoft още не познава, и не позволява изключение за отделна програма. За да използвате Qargo Autofill, го изключете: Защита в Windows (Windows Security) → Управление на приложения и браузър (App &amp; browser control) → настройки на „Интелигентно управление на приложенията“ (Smart App Control settings) → Изкл. (Off), и изпълнете реда отново. Повторното включване по-късно не винаги е възможно без нулиране на Windows. В режим „Оценка“ (Evaluation) Windows може по-късно сам да го включи; тогава програмата спира да се стартира, а повторното изпълнение на реда обяснява защо.",
+  "w_clm_title": "“Qargo Autofill can NOT be installed on this PC”",
+  "w_clm_body": "Организацията, която управлява този компютър, не разрешава нови програми. Нищо не е променено. Свържете се с човека, който ви е изпратил тази страница.",
+  "w_fail_title": "“Qargo Autofill could NOT be installed”",
+  "w_fail_body": "Проверете връзката с интернет и изпълнете реда отново. Ако пак не стане, свържете се с човека, който ви е изпратил тази страница.",
+  "next_title": "След инсталирането",
+  "next_body": "Програмата се отваря в прозорец на браузър. Първия път влезте с обичайния си акаунт в Qargo.",
+  "helper_title": "Технически подробности и премахване",
+  "helper_does": "Редът инсталира програмата във вашата потребителска папка и добавя икона на работния плот. Не изисква администраторски права и не променя системни настройки. Програмата се обновява сама.",
   "helper_where": "Папка:",
-  "helper_remove": "За да премахнете програмата (документите и входът се запазват), използвайте този ред по същия начин:"
+  "helper_remove": "За да премахнете програмата (документите и входът се запазват), изпълнете този ред по същия начин:"
  }
 }
 </script>
